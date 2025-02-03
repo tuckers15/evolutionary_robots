@@ -10,8 +10,9 @@ p.configureDebugVisualizer(p.COV_ENABLE_GUI,0) #optional (commented out for now)
 p.setGravity(0,0,-9.8) #gravity force
 
 planeId = p.loadURDF("plane.urdf") #floor plane
+robotId = p.loadURDF("body.urdf") #floor plane
 
-p.loadSDF("boxes.sdf") #importing world stored in box.sdf
+p.loadSDF("world.sdf") #importing world stored in box.sdf
 
 for i in range(10000):
     print(i)
