@@ -17,4 +17,5 @@ FRONTLEGPHASEOFFSET = 0
 BODY = "body.urdf" # Robot model
 LOOP_LENGTH = 1000  # Number of simulation steps
 PLANE = "plane.urdf"  # Floor plane
+SLEEP_TIMER = 1/60
 WORLD = "world.sdf"
