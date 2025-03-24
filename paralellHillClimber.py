@@ -75,7 +75,7 @@ class PARALLEL_HILL_CLIMBER:
 
     def Evaluate(self, solutions):
         for i in solutions.values():
-            print(f"Evaluating parent {i}...")
+            # print(f"Evaluating parent {i}...")
             i.Start_Simulation(directOrGui = "DIRECT")
         
         for i in solutions.values():
