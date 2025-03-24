@@ -10,6 +10,26 @@ MotionThreadFunc thread started
 b3Printf: b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
 
 b3Printf: expected a world element, continuing without it.
+Traceback (most recent call last):
+  File "/Users/tucker/Documents/CS3060/evolutionary_robots/simulate.py", line 11, in <module>
+    simulate.Run()
+  File "/Users/tucker/Documents/CS3060/evolutionary_robots/simulation.py", line 49, in Run
+    self.robot.Think()
+  File "/Users/tucker/Documents/CS3060/evolutionary_robots/robot.py", line 35, in Think
+    self.nn.Update()
+  File "/Users/tucker/Documents/CS3060/evolutionary_robots/pyrosim/neuralNetwork.py", line 53, in Update
+    self.neurons[neuronName].Update_Sensor_Neuron()
+  File "/Users/tucker/Documents/CS3060/evolutionary_robots/pyrosim/neuron.py", line 71, in Update_Sensor_Neuron
+    self.Set_Value(pyrosim.Get_Touch_Sensor_Value_For_Link(self.Get_Link_Name()))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tucker/Documents/CS3060/evolutionary_robots/pyrosim/pyrosim.py", line 53, in Get_Touch_Sensor_Value_For_Link
+    for pt in pts:
+TypeError: 'NoneType' object is not iterable
+Exception ignored in: <function SIMULATION.__del__ at 0x100bf2520>
+Traceback (most recent call last):
+  File "/Users/tucker/Documents/CS3060/evolutionary_robots/simulation.py", line 14, in __del__
+pybullet.error: Not connected to physics server.
+Closing simulation
 numActiveThreads = 0
 stopping threads
 Thread with taskId 0 exiting
@@ -18,20 +38,3 @@ destroy semaphore
 semaphore destroyed
 destroy main semaphore
 main semaphore destroyed
-Traceback (most recent call last):
-  File "/Users/tucker/Documents/CS3060/evolutionary_robots/simulate.py", line 11, in <module>
-    simulate.Run()
-  File "/Users/tucker/Documents/CS3060/evolutionary_robots/simulation.py", line 50, in Run
-    self.robot.Act(i)
-  File "/Users/tucker/Documents/CS3060/evolutionary_robots/robot.py", line 54, in Act
-    motor.Set_Value(robot = self.robotId, desiredAngle = desiredAngle)
-  File "/Users/tucker/Documents/CS3060/evolutionary_robots/motor.py", line 28, in Set_Value
-    pyrosim.Set_Motor_For_Joint(
-  File "/Users/tucker/Documents/CS3060/evolutionary_robots/pyrosim/pyrosim.py", line 158, in Set_Motor_For_Joint
-    p.setJointMotorControl2(
-pybullet.error: Not connected to physics server.
-Exception ignored in: <function SIMULATION.__del__ at 0x10093e520>
-Traceback (most recent call last):
-  File "/Users/tucker/Documents/CS3060/evolutionary_robots/simulation.py", line 14, in __del__
-pybullet.error: Not connected to physics server.
-Closing simulation

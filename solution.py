@@ -81,41 +81,23 @@ class SOLUTION:
         pyrosim.End()
 
     def Generate_Brain(self):
-        
-        pyrosim.Start_NeuralNetwork("brain"+ str(self.myID) +".nndf")
+        pyrosim.Start_NeuralNetwork(f"brain{self.myID}.nndf")
 
-        # Sensor Neurons
-        self.sensor_neurons = {
-            0: "Torso",
-            1: "BackLeg",
-            2: "FrontLeg"
-        }
-        
-        # Motor Neurons
-        self.motor_neurons = {
-            3: "Torso_BackLeg",
-            4: "Torso_FrontLeg"
-        }
+        pyrosim.Send_Sensor_Neuron(name = 0, linkName = "Torso")
+        pyrosim.Send_Sensor_Neuron(name = 1, linkName = "BackLeg")
+        pyrosim.Send_Sensor_Neuron(name = 2, linkName = "FrontLeg")
 
-        # Create Sensor Neurons
-        for name, link in self.sensor_neurons.items():
-            pyrosim.Send_Sensor_Neuron(name=name, linkName=link)
+        pyrosim.Send_Motor_Neuron(name = 3 , jointName = "Torso_BackLeg")
+        pyrosim.Send_Motor_Neuron(name = 4 , jointName = "Torso_FrontLeg")
 
-        # Create Motor Neurons
-        for name, joint in self.motor_neurons.items():
-            pyrosim.Send_Motor_Neuron(name=name, jointName=joint)
+        sensor_neuron_names = list(range(0,3))
+        motor_neuron_names = list(range(0,2))
 
-
-        num_sensors, num_motors = self.weights.shape  # Automatically get dimensions
-
-        # Generate synapses using nested loops
-        for currentRow in range(num_sensors):  # 3 sensor neurons
-            for currentColumn in range(num_motors):  # 2 motor neurons
-                pyrosim.Send_Synapse(
-                    sourceNeuronName=currentRow,
-                    targetNeuronName=currentColumn + 3,  # Ensure motor neurons are indexed correctly
-                    weight=self.weights[currentRow][currentColumn]
-            )
+        for currentRow in sensor_neuron_names:
+            for currentColumn in motor_neuron_names:
+    
+                pyrosim.Send_Synapse(sourceNeuronName = currentRow, targetNeuronName = currentColumn + 3, weight = self.weights[currentRow][currentColumn])
+            
 
         pyrosim.End()
 
@@ -123,16 +105,12 @@ class SOLUTION:
         pass #TODO: come back a build get fitness
     
     def Mutate(self):
-        #TODO: differing step 59 for sake of dictionary
-        row_index = random.randint(0, 2) 
-        chosen_motor_neuron = random.choice(list(self.motor_neurons.keys())) 
-        column_index = list(self.motor_neurons.keys()).index(chosen_motor_neuron)  #corresponding column index
+        randomRow = random.randint(0,2)
+        randomCol = random.randint(0,1)
 
-        self.weights[row_index][column_index] = random.random() * 2 - 1
+        self.weights[randomRow,randomCol] = random.random() * 2 - 1
 
  
-
-
     def Set_ID(self, nextAvailableID):
         self.myID = nextAvailableID
         
