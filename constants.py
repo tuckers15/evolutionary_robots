@@ -2,11 +2,17 @@ import math
 
 "Constants to be used in simulate.py and other associated files"
 
+### Robot features ###
+numSensorNeurons = 4
+numMotorNeurons = 8
+
 #### Robot controls ####
 
 AMPLITUDE = math.pi / 2
 FREQUENCY = 20
 PHASEOFFSET = 0
+
+motorJointRange = 0.2
 
 FRONTLEGAMPLITUDE = math.pi / 2
 FRONTLEGFREQUENCY = 20
@@ -22,5 +28,5 @@ WORLD = "world.sdf"
 
 
 ### Search Variables
-NUMBER_OF_GENERATIONS = 10
-POPULATION_SIZE = 10
+NUMBER_OF_GENERATIONS = 1
+POPULATION_SIZE = 1
