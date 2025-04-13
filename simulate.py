@@ -12,6 +12,8 @@ simulate.Run()
 
 simulate.Get_Fitness()
 
+#simulate.Get_Touch_Sensor_Values()
+
 
 
 

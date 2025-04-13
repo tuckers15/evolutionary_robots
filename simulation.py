@@ -52,7 +52,9 @@ class SIMULATION:
             if self.direcOrGui == "GUI":
                 time.sleep(c.SLEEP_TIMER)
             
-    
+
     def Get_Fitness(self):
         self.robot.Get_Fitness()
-        
+    
+    def Get_Touch_Sensor_Values(self):
+        self.robot.Get_Sensor_Touch_Values()

@@ -97,8 +97,7 @@ class SOLUTION:
 
         pyrosim.Send_Joint(name = "RightLeg_RightLowerLeg" , parent= "RightLeg" , child = "RightLowerLeg" , type = "revolute", position = [1,0,0], jointAxis = "0 1 0")
         pyrosim.Send_Cube(name="RightLowerLeg", pos=[0,0,-0.5], size=[0.2, 0.2, 1])
-        
-
+    
         pyrosim.End()
       
     def Generate_Brain(self):
@@ -129,7 +128,33 @@ class SOLUTION:
             
 
         pyrosim.End()
-   
+        # pyrosim.Start_NeuralNetwork(f"brain{self.myID}.nndf")
+
+        # # Sensor Neurons (For detecting positions and angles of the legs and tail)
+        # pyrosim.Send_Sensor_Neuron(name=0, linkName="FrontLeg")
+        # pyrosim.Send_Sensor_Neuron(name=1, linkName="BackLeg")
+        # pyrosim.Send_Sensor_Neuron(name=2, linkName="TailBase")
+        # pyrosim.Send_Sensor_Neuron(name=3, linkName="TailMid")
+        # pyrosim.Send_Sensor_Neuron(name=4, linkName="TailEnd")
+
+        # # Motor Neurons (For controlling the joints)
+        # pyrosim.Send_Motor_Neuron(name=5, jointName="Torso_FrontLeg")
+        # pyrosim.Send_Motor_Neuron(name=6, jointName="Torso_BackLeg")
+        # pyrosim.Send_Motor_Neuron(name=7, jointName="TailBase_TailMid")
+        # pyrosim.Send_Motor_Neuron(name=8, jointName="TailMid_TailEnd")
+
+        # # Link sensor neurons with motor neurons
+        # sensor_neuron_names = list(range(0, 5))  # 5 sensor neurons for legs and tail
+        # motor_neuron_names = list(range(0, 4))   # 4 motor neurons for the joints
+
+        # self.Print()
+        # for currentRow in sensor_neuron_names:
+        #     for currentColumn in motor_neuron_names:
+        #         print(self.weights[currentRow][currentColumn])
+        #         pyrosim.Send_Synapse(sourceNeuronName=currentRow, targetNeuronName=currentColumn, weight=self.weights[currentRow][currentColumn])
+
+        # pyrosim.End()
+
 
     def Get_Fitness():
         pass #TODO: come back a build get fitness

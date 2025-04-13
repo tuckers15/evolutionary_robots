@@ -1,4 +1,5 @@
 import constants as c
+import numpy as np
 import pybullet as p
 import pyrosim.pyrosim as pyrosim
 
@@ -69,18 +70,52 @@ class ROBOT:
         
         basePositionAndOrientation = p.getBasePositionAndOrientation(self.robotId)
         basePosition = basePositionAndOrientation[0]
-        xPosition = basePosition[0]
+        zPosition = basePosition[2]
+
+        matrix = np.array(self.Get_Sensor_Touch_Values())
+
+        time_steps = matrix.T
+
+        longest_air_streak = 0
+        current_air_streak = 0
+
+        for timestep in time_steps:
+            if 1 in timestep:
+                current_air_streak = 0  # Touch detected
+            else:
+                current_air_streak += 1
+
+                longest_air_streak = max(longest_air_streak, current_air_streak)
+                
+    
+        total_ground_contacts = np.count_nonzero(matrix == 1)
+
+
+        fitness = longest_air_streak - 0.01*(total_ground_contacts)
 
         tmpFileName = "tmp"+ self.solutionId +".txt"
         finFileName = "fitness"+ self.solutionId +".txt"
 
         f = open(tmpFileName, "w")
-        f.write(str(xPosition))
+        f.write(str(fitness))
         f.close()
 
 
         os.system("mv " + tmpFileName + " " + finFileName)
 
-        print(xPosition)
+        print(fitness)
 
-      
+
+    def Get_Sensor_Touch_Values(self):
+        sensor_names = [name for name in self.sensors if "Lower" in name]
+        sensor_count = len(sensor_names)
+        self.matrix = [[0] * sensor_count for _ in range(c.LOOP_LENGTH)]
+
+        for i in range(0, c.LOOP_LENGTH - 1):
+            for idx, name in enumerate(sensor_names):
+                self.matrix[i][idx] = self.sensors[name].values[i]
+
+        return self.matrix
+
+
+        

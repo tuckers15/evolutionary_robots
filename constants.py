@@ -12,7 +12,7 @@ AMPLITUDE = math.pi / 2
 FREQUENCY = 20
 PHASEOFFSET = 0
 
-motorJointRange = 0.2
+motorJointRange = 0.5
 
 FRONTLEGAMPLITUDE = math.pi / 2
 FRONTLEGFREQUENCY = 20
@@ -28,5 +28,5 @@ WORLD = "world.sdf"
 
 
 ### Search Variables
-NUMBER_OF_GENERATIONS = 1
-POPULATION_SIZE = 1
+NUMBER_OF_GENERATIONS = 10
+POPULATION_SIZE = 10

@@ -9,7 +9,7 @@ class SENSOR:
 
     
     def Get_Value(self, t):
-        if t == c.LOOP_LENGTH - 1:
+        if t < c.LOOP_LENGTH:
             self.values[t] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)  
             #print(f"Sensor {self.linkName} values: {self.values}")
     

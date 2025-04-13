@@ -85,22 +85,22 @@ class PARALLEL_HILL_CLIMBER:
     def Select(self):
 
         for key in self.parents:
-            if self.children[key].fitness < self.parents[key].fitness:
+            if self.children[key].fitness > self.parents[key].fitness:
        
                 self.parents[key] = self.children[key]
                 
        
     def Show_Best(self):
         
-        lowest_fitness = float("inf")  # Start with an infinitely large number
+        best_fitness = float(-1000.00)  # Start with an impossibly low number
         best_parent_id = None
 
         for key, parent in self.parents.items():
             fitness_value = float(parent.fitness)  # Convert to float
 
             # Update lowest fitness
-            if fitness_value < lowest_fitness:
-                lowest_fitness = fitness_value
+            if fitness_value > best_fitness:
+                best_fitness = fitness_value
                 best_parent_id = key
                 best_parent = parent
 
