@@ -76,9 +76,11 @@ class PARALLEL_HILL_CLIMBER:
         for i in solutions.values():
             # print(f"Evaluating parent {i}...")
             i.Start_Simulation(directOrGui = "DIRECT")
-        
-        for i in solutions.values():
             i.Wait_For_Simulation_To_End()
+        
+        
+        # for i in solutions.values():
+        #     i.Wait_For_Simulation_To_End()
         
 
 
@@ -92,7 +94,7 @@ class PARALLEL_HILL_CLIMBER:
        
     def Show_Best(self):
         
-        best_fitness = float(-1000.00)  # Start with an impossibly low number
+        best_fitness = float(-10000000000.0)  # Start with an impossibly low number
         best_parent_id = None
 
         for key, parent in self.parents.items():

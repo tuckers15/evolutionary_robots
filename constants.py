@@ -12,7 +12,7 @@ AMPLITUDE = math.pi / 2
 FREQUENCY = 20
 PHASEOFFSET = 0
 
-motorJointRange = 0.5
+motorJointRange = 0.3
 
 FRONTLEGAMPLITUDE = math.pi / 2
 FRONTLEGFREQUENCY = 20
@@ -21,12 +21,12 @@ FRONTLEGPHASEOFFSET = 0
 ### Simulation Settings
 
 BODY = "body.urdf" # Robot model
-LOOP_LENGTH = 10000  # Number of simulation steps
+LOOP_LENGTH = 1000  # Number of simulation steps
 PLANE = "plane.urdf"  # Floor plane
-SLEEP_TIMER = 1/2000
+SLEEP_TIMER = 1/60
 WORLD = "world.sdf"
 
 
 ### Search Variables
-NUMBER_OF_GENERATIONS = 10
-POPULATION_SIZE = 10
+NUMBER_OF_GENERATIONS = 20
+POPULATION_SIZE = 20
