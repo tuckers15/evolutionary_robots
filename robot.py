@@ -10,9 +10,10 @@ import os
 
 
 class ROBOT:
-    def __init__(self, solutionId):
+    def __init__(self, solutionId, weight_dist):
 
         self.solutionId = solutionId
+        self.weight_dist = int(weight_dist)
 
         self.robotId = p.loadURDF(c.BODY)  # Robot model
         pyrosim.Prepare_To_Simulate(self.robotId)
@@ -93,13 +94,25 @@ class ROBOT:
 
         total_ground_contacts = np.count_nonzero(matrix == 1)
 
-        # === Weights ===
-        w_air_streak = 10.0
-        w_forward_net = 5.0
-        w_jump_height = 10.0
-        w_ground_penalty = 2.0
+        if self.weight_dist == 0:
+            # === Weights ===
+            w_air_streak = 10.0
+            w_forward_net = 5.0
+            w_jump_height = 10.0
+            w_ground_penalty = 0.0
 
-      
+        elif self.weight_dist == 1:
+            w_air_streak = 50.0
+            w_forward_net = 0.0
+            w_jump_height = 0.0
+            w_ground_penalty = 2.0
+
+        else:
+            w_air_streak = 0
+            w_forward_net = 0
+            w_jump_height = 0
+            w_ground_penalty = 0
+        
         # === Fitness Function ===
         fitness = (
             w_air_streak * longest_air_streak +
@@ -113,6 +126,10 @@ class ROBOT:
 
         with open(tmpFileName, "w") as f:
             f.write(str(fitness))
+        
+        with open("max_z" + self.solutionId + ".txt", "w") as f:
+            f.write(str(self.max_z))
+
 
         os.system("mv " + tmpFileName + " " + finFileName)
         print("Fitness:", fitness)

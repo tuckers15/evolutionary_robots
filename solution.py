@@ -17,13 +17,14 @@ class SOLUTION:
     y = 0
     z = 0.5
 
-    def __init__(self, nextAvailableID):
+    def __init__(self, nextAvailableID, weight_dist):
         self.myID = nextAvailableID
 
-        self.weights = np.random.rand(c.numSensorNeurons, c.numMotorNeurons) * 2 - 1  # 3x2 matrix of random weights in range [-1, 1]
-        #print(self.weights)
+        self.weight_dist = weight_dist
 
-    
+        self.weights = np.random.rand(c.numSensorNeurons, c.numMotorNeurons) * 2 - 1  # 3x2 matrix of random weights in range [-1, 1]
+
+        self.max_z = None
         #exit()
 
     def Print(self):
@@ -38,7 +39,7 @@ class SOLUTION:
         self.Generate_Body()
         self.Generate_Brain()
 
-        os.system(f"python3 simulate.py {directOrGui} {int(self.myID)} 2>&1 &")
+        os.system(f"python3 simulate.py {directOrGui} {int(self.myID)} {int(self.weight_dist)} 2>&1 &")
 
     
     def Wait_For_Simulation_To_End(self):
@@ -50,11 +51,16 @@ class SOLUTION:
 
         while not os.path.exists(fitnessFileName):
             time.sleep(0.01)
-        f = open(fitnessFileName)
-        self.fitness = float(f.read())
-        f.close()
+
+        with open(f"fitness{self.myID}.txt", "r") as f:
+            self.fitness = float(f.read())
+            f.close()
+
+        with open(f"max_z{self.myID}.txt", "r") as f:
+            self.max_z = float(f.read())
 
         #print("solution: " + str(self.myID)+ " fitness: " + str(self.fitness))
+        os.system("rm max_z"+str(self.myID)+".txt")
 
         os.system("rm fitness"+str(self.myID)+".txt")
         
@@ -68,6 +74,7 @@ class SOLUTION:
 
         pyrosim.End()
 
+    
     def Generate_Body(self):
         pyrosim.Start_URDF("body.urdf")
 
@@ -99,11 +106,10 @@ class SOLUTION:
         pyrosim.Send_Cube(name="RightLowerLeg", pos=[0,0,-0.5], size=[0.2, 0.2, 1])
 
         pyrosim.End()
-    
+        
     def Generate_Brain(self):
         pyrosim.Start_NeuralNetwork(f"brain{self.myID}.nndf")
 
-        
         pyrosim.Send_Sensor_Neuron(name = 0, linkName = "BackLowerLeg")
         pyrosim.Send_Sensor_Neuron(name = 1, linkName = "FrontLowerLeg")
         pyrosim.Send_Sensor_Neuron(name = 2, linkName = "RightLowerLeg")
@@ -119,8 +125,6 @@ class SOLUTION:
         pyrosim.Send_Motor_Neuron(name = 10, jointName = "LeftLeg_LeftLowerLeg")
         pyrosim.Send_Motor_Neuron(name = 11, jointName = "RightLeg_RightLowerLeg")
 
-        
-
         sensor_neuron_names = list(range(0,c.numSensorNeurons))
         motor_neuron_names = list(range(0,c.numMotorNeurons))
 
@@ -131,6 +135,7 @@ class SOLUTION:
             
 
         pyrosim.End()
+
         # pyrosim.Start_NeuralNetwork(f"brain{self.myID}.nndf")
 
         # # Sensor Neurons (For detecting positions and angles of the legs and tail)

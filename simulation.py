@@ -13,11 +13,13 @@ class SIMULATION:
         print("Closing simulation")
         p.disconnect()
 
-    def __init__(self, directOrGui, solutionId):
+    def __init__(self, directOrGui, solutionId, weight_dist):
 
         self.solutionID = solutionId
 
         self.direcOrGui = directOrGui
+
+        self.weight_dist = weight_dist
         
         if directOrGui == "DIRECT":
             self.physicsClient = p.connect(p.DIRECT)
@@ -33,7 +35,7 @@ class SIMULATION:
         p.setAdditionalSearchPath(pybullet_data.getDataPath())  # Adding data path for plane.urdf
 
         self.world = WORLD()
-        self.robot = ROBOT(self.solutionID)
+        self.robot = ROBOT(self.solutionID, self.weight_dist)
 
 
         p.setGravity(0, 0, -9.8)  # Gravity force
